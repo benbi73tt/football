@@ -44,7 +44,7 @@ public class ServiceGameImpl implements ServiceGame {
     public Player infoPlayer(int id) {
 //        Player player = game.getPlayers().get(id);
 //        return player;
-        Player player =entityManager.find(Player.class,id);
+        Player player = entityManager.find(Player.class, id);
         entityManager.detach(player);
         return player;
     }

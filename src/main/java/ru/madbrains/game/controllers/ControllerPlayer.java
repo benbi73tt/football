@@ -4,10 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.madbrains.game.dto.GameDTO;
 import ru.madbrains.game.game.players.Player;
 import ru.madbrains.game.service.ServiceGame;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -18,8 +17,8 @@ public class ControllerPlayer {
     private ServiceGame serviceGame;
 
     @GetMapping("/player")
-    public List<Player> game() {
-        return serviceGame.getPlayer();
+    public GameDTO game() {
+        return GameDTO.from(serviceGame.getGame());
     }
 
     @PostMapping("/player")
