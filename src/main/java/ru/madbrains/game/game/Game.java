@@ -13,10 +13,10 @@ import java.util.List;
 public class Game {
     private List<Player> players;
 
-    @Value("Football")
+    @Value("Football12")
     private String name;
 
-    public Game(@Qualifier("GameName") String gameName){
+    public Game(String gameName){
         this.name = gameName;
         this.players = new ArrayList<>();
 

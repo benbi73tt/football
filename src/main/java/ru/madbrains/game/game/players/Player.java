@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 public class Player {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     @NotEmpty(message = "Name should not be empty")//нельзя пустое значение(Ошибка)
     @Size(min = 2, max = 12, message = "Name should be between 2 and 12 characters")
@@ -24,11 +24,11 @@ public class Player {
 
     public Player(){}
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

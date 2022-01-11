@@ -1,6 +1,7 @@
 package ru.madbrains.game.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import ru.madbrains.game.game.Game;
 import ru.madbrains.game.game.players.Player;
@@ -13,12 +14,17 @@ import java.util.stream.Collectors;
 
 @Service
 public class ServiceGameImpl implements ServiceGame {
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     private Game game;
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    public ServiceGameImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public Game getGame() {
@@ -41,6 +47,7 @@ public class ServiceGameImpl implements ServiceGame {
     }
 
     @Override
+//    @Transactional
     public Player infoPlayer(int id) {
 //        Player player = game.getPlayers().get(id);
 //        return player;
@@ -49,13 +56,17 @@ public class ServiceGameImpl implements ServiceGame {
         return player;
     }
 
-//    @Override
-//    public void deletePlayer(int id) {
-//
-//    }
-//
-//    @Override
-//    public void updatePlayer(int id) {
-//
-//    }
+    @Override
+    @Transactional
+    public void deletePlayer(int id) {
+        Player player = entityManager.find(Player.class, id);
+        entityManager.remove(player);
+    }
+
+    @Override
+    @Transactional
+    public void updatePlayer(int id, Player player) {
+        player.setId(id);
+        entityManager.merge(player);
+    }
 }

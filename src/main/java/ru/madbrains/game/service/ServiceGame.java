@@ -10,7 +10,7 @@ public interface ServiceGame {
     void addPlayer(Player player);
     List<Player> getPlayer();
     Player infoPlayer(int id);
-//    void deletePlayer(int id);
-//    void updatePlayer(int id);
+    void deletePlayer(int id);
+    void updatePlayer(int id, Player player);
 
 }

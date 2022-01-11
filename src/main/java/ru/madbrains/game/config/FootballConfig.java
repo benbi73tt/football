@@ -12,6 +12,7 @@ import ru.madbrains.game.game.Game;
 public class FootballConfig {
 
     @Bean("GameName")
+    @Primary
     public String getGameName(){
         return "Football";
     }
