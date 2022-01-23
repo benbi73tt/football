@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.madbrains.game.dto.GameDTO;
+import ru.madbrains.game.dto.PlayerDTO;
 import ru.madbrains.game.game.players.Player;
 import ru.madbrains.game.service.ServiceGame;
 
@@ -39,7 +40,8 @@ public class ControllerPlayer {
     public ResponseEntity getPlayerByIndex(@PathVariable int index) {
         log.info("get player by index " + index);
         try{
-            return ResponseEntity.ok(serviceGame.infoPlayer(index));
+            PlayerDTO dto = PlayerDTO.from(serviceGame.infoPlayer(index));
+            return ResponseEntity.ok(dto);
         } catch (IndexOutOfBoundsException e){
             return ResponseEntity.notFound().build();
         }

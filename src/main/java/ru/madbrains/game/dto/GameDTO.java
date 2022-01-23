@@ -11,10 +11,10 @@ public class GameDTO {
     private String name;
     private List<Player> players;
 
-public static GameDTO from(Game game){
-    GameDTO gameDTO = new GameDTO();
-    gameDTO.setName(game.getName());
-    gameDTO.setPlayers(game.getPlayers());
-    return gameDTO;
-}
+    public static GameDTO from(Game game) {
+        GameDTO gameDTO = new GameDTO();
+        gameDTO.setName(game.getName());
+        gameDTO.setPlayers(game.getPlayers());
+        return gameDTO;
+    }
 }

@@ -1,8 +1,10 @@
 package ru.madbrains.game.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import ru.madbrains.game.dao.GameDAO;
 import ru.madbrains.game.game.Game;
 import ru.madbrains.game.game.players.Player;
 
@@ -12,6 +14,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class ServiceGameImpl implements ServiceGame {
     private final JdbcTemplate jdbcTemplate;
@@ -19,8 +22,8 @@ public class ServiceGameImpl implements ServiceGame {
     @Autowired
     private Game game;
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Autowired
+    GameDAO gameDAO;
 
     public ServiceGameImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -36,37 +39,31 @@ public class ServiceGameImpl implements ServiceGame {
     public void addPlayer(Player player) {
 
 //        game.getPlayers().add(player);
-        entityManager.persist(player);
+        gameDAO.addPlayer(player);
     }
 
-    @Override
-    public List<Player> getPlayer() {
-        List<Player> players = game.getPlayers().stream()
-                .collect(Collectors.toList());
-        return players;
-    }
+//    @Override
+//    public List<Player> getPlayer() {
+//        return gameDAO.getPlayer();
+//    }
 
     @Override
 //    @Transactional
     public Player infoPlayer(int id) {
 //        Player player = game.getPlayers().get(id);
 //        return player;
-        Player player = entityManager.find(Player.class, id);
-        entityManager.detach(player);
-        return player;
+        return gameDAO.infoPlayer(id);
     }
 
     @Override
     @Transactional
     public void deletePlayer(int id) {
-        Player player = entityManager.find(Player.class, id);
-        entityManager.remove(player);
+        gameDAO.deletePlayer(id);
     }
 
     @Override
     @Transactional
     public void updatePlayer(int id, Player player) {
-        player.setId(id);
-        entityManager.merge(player);
+        gameDAO.updatePlayer(id, player);
     }
 }
